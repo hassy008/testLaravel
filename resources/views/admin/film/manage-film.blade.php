@@ -38,8 +38,9 @@ Manage Genre
             <tr>
                 <th><i class="icon-bullhorn"></i> Genre Id</th>
                 <th class="hidden-phone"><i class="icon-question-sign"></i> Genre Name</th>
-                
-                <th><i class=" icon-edit"></i> Image</th>
+                <th class="hidden-phone"><i class="icon-question-sign"></i> Description</th>
+                <th class="hidden-phone"><i class="icon-question-sign"></i> Rating</th>
+                <th><i class="icon-edit"></i> Image</th>
                 <th><i class="icon-bookmark"></i> Action</th>
                 <th></th>
             </tr>
@@ -52,20 +53,21 @@ Manage Genre
     $i=1;
 ?>
 
-@foreach($all_genres as $v_genre)
+@foreach($manage_all_film as $v_film)
 
     <tr>
         <td><a href="#">{{ $i++ }}</a></td>
-        <td class="hidden-phone">{{ $v_genre->genres_name }}</td>
+        <td class="hidden-phone">{{ $v_film->name }}</td>
+        <td class="hidden-phone">{!! str_limit($v_film->description, 60) !!}</td>
+        <td class="hidden-phone">{{ $v_film->rating }}</td>
         <td>
-            {{-- <img src="{{ asset('public/storage/genre/'.$v_genre->genres_image) }}" alt="" style="width: 80px; height: 50px;"> --}}
-            <img src="{{ asset('public/genre/'.$v_genre->genres_image) }}" alt="" style="width: 80px; height: 50px;">
+            <img src="{{ asset('public/storage/film/'.$v_film->image) }}" alt="" style="width: 80px; height: 50px;"> 
+       {{--      <img src="{{ asset('public/genre/'.$v_film->image) }}" alt="" style="width: 80px; height: 50px;">--}}
         </td>
-        <td>
-           
-         <a href="{{ url('/edit-genre/'.$v_genre->id) }}" class="btn btn-primary"><i class="icon-pencil"></i></a> 
 
-            <a href="{{ url('/delete-genre/'.$v_genre->id) }}" class="btn btn-danger" onclick="return checkDelete()"><i class="icon-trash "></i></a>
+        <td>
+            <a href="{{ url('/edit-genre/'.$v_film->id) }}" class="btn btn-primary"><i class="icon-pencil"></i></a> 
+            <a href="{{ url('/delete-genre/'.$v_film->id) }}" class="btn btn-danger" onclick="return checkDelete()"><i class="icon-trash "></i></a>
         </td>
     </tr>
        

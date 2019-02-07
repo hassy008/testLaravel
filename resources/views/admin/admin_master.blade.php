@@ -22,6 +22,9 @@
    <!--tostr-->
    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="{{ asset('public/admin/bootstrap-select.css') }}">
+
    <!--for delete query begin -->
    <script type="text/javascript">
       function checkDelete(){
@@ -134,7 +137,16 @@
    </script>
 
 <!--for delete query end -->
+<script>
+      $(document).ready(function(){
+         CKEDITOR.replace('richTextBody');
+      });    
 
+       $(document).ready(function(){
+         CKEDITOR.replace('richTextBody1');
+      });     
+
+</script>
 
    <!-- END JAVASCRIPTS -->   
 </body>

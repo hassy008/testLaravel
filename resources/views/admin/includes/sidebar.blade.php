@@ -29,25 +29,17 @@
               <li class="sub-menu">
                   <a href="javascript:;" class="">
                       <i class="icon-cogs"></i>
-                      <span>Manufacturer</span>
+                      <span>Film</span>
                       <span class="arrow"></span>
                   </a>
                   <ul class="sub">
-                    <li><a class="" href="{{ url('/add-manufacturer') }}">Add Manufacturer</a></li>
-                    <li><a class="" href="{{ url('/manage-manufacturer') }}">Manage Manufacturer</a></li>
+                    <li><a class="" href="{{ url('/add-film') }}">Add Film</a></li>
+                    <li><a class="" href="{{ url('/manage-film') }}">Manage Film</a></li>
                   </ul>
               </li>
-              <li class="sub-menu">
-                  <a href="javascript:;" class="">
-                      <i class="icon-tasks"></i>
-                      <span>Product</span>
-                      <span class="arrow"></span>
-                  </a>
-                  <ul class="sub">
-                      <li><a class="" href="{{url('/add-product')}}">Add Product</a></li>
-                      <li><a class="" href="{{url('/manage-product')}}">Manage Product</a></li>
-                  </ul>
-              </li>
+              
+
+
               <li class="sub-menu">
                   <a href="javascript:;" class="">
                       <i class="icon-th"></i>

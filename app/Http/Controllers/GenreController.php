@@ -87,7 +87,7 @@ class GenreController extends Controller
    public function manageGenre()
    {
    	  $all_genres=DB::table('genres')
-    				->get();
+    			       	->get();
 
       $manage_genres_page=view('admin.genre.manage-genre')
     			->with('all_genres', $all_genres);
@@ -98,7 +98,7 @@ class GenreController extends Controller
    public function editGenre($id)
    {
       $genre_edit=DB::table('genres')
-            ->where('genres_id', $id)
+            ->where('id', $id)
             ->first();
 
         $edit_genres_page=view('admin.genre.edit-genre')
@@ -110,8 +110,7 @@ class GenreController extends Controller
    public function updateGenre(Request $request)
     {
      $this->validate($request, [
-   	  'genres_name'   => 'required',
-   	//  'genres_image' => 'mimes:jpg,jpeg,png,bmp'
+   	  'genres_name'   => 'required'
    	]);
 
       try {
@@ -140,7 +139,7 @@ class GenreController extends Controller
               }
               $data['genres_image'] = $image_name;
               $result = DB::table('genres')
-                        ->where('genres_id', $request->genres_id)
+                        ->where('id', $request->genres_id)
                         ->update($data);
               } else{
                   exit();
@@ -154,7 +153,7 @@ class GenreController extends Controller
         else{
             $data['genres_image'] = $request->last_image_path;
             $result = DB::table('genres')
-                      ->where('genres_id', $request->genres_id)
+                      ->where('id', $request->genres_id)
                       ->update($data);
         }
         //--------End Image Upload------//
@@ -173,7 +172,7 @@ class GenreController extends Controller
     public function deleteGenre($genres_id)
     {
        DB::table('genres')
-        ->where('genres_id', $genres_id)
+        ->where('id', $genres_id)
         ->delete();
        // return redirect::to('/manage-product');
       return back()->with('error', 'Genre Deleted Successfully');

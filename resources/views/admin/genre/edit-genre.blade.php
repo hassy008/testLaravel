@@ -31,7 +31,7 @@ Edit genre
  	 	  	<label class="control-label">Genre Name</label>
  	 	  	<div class="controls">
  	 	  		<input type="text" class="span6" name="genres_name" value="{{ $genre_edit->genres_name }}">	
-         <input type="hidden" class="span6" name="genres_id" value="{{ $genre_edit->genres_id }}">
+         <input type="hidden" class="span6" name="genres_id" value="{{ $genre_edit->id }}">
  	 	  	</div>
  	 	  </div>
       

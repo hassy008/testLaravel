@@ -35,4 +35,6 @@ Route::post('/update-genre', 'GenreController@updateGenre');
 Route::get('/delete-genre/{id}', 'GenreController@deleteGenre');
 
 
-
+Route::get('/add-film', 'FilmController@addFilm');
+Route::post('/save-film', 'FilmController@saveFilm');
+Route::get('/manage-film', 'FilmController@manageFilm');
