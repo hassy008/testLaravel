@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
+Route::get('/film-details/{slug}', 'WelcomeController@filmDetails');
+Route::get('/category-blog/{id}', 'WelcomeController@categoryBlog');
 
 Auth::routes();
 
