@@ -117,6 +117,9 @@ Add Film
 <div class="control-group">
   <div class="span6">
   	<button type="submit" name="btn" class="btn btn-success btn-block">Save Film Info</button>	
+    <button type="submit" name="btn" class="btn btn-danger btn-block">
+        <a href="{{ url('/dashboard') }}" style="text-decoration: none; color: white;">Back</a> 
+    </button>
   </div>
 </div>
 

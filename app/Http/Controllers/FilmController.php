@@ -99,16 +99,17 @@ class FilmController extends Controller
 
     public function manageFilm()
     {
-        $manage_all_film = Film::latest()->get();
-        return view('admin.film.manage-film', compact('manage_all_film'));
+      //  $manage_all_film = Film::latest()->get();
+       // return view('admin.film.manage-film', compact('manage_all_film'));
 
-      // $manage_all_film = DB::table('films')
-      //                     ->get();
+      $manage_all_film = DB::table('films')
+                        ->orderBy('id', 'Desc')
+                        ->get();
 
-      // $manage_film_page=view('admin.film.manage-film')
-      //           ->with('manage_all_film', $manage_all_film);
-      // return view('admin.admin_master')
-      //       ->with('mainContent', $manage_film_page); 
+      $manage_film_page=view('admin.film.manage-film')
+                 ->with('manage_all_film', $manage_all_film);
+       return view('admin.admin_master')
+             ->with('mainContent', $manage_film_page); 
 
     }
 
@@ -169,7 +170,8 @@ class FilmController extends Controller
                 Storage::disk('public')->makeDirectory('film');
             }
 // delete old image
-            if (storage::disk('public')->exists('film/'.$film->image)) {
+            if (storage::disk('public')->exists('film/'.$film->image)) 
+            {
                Storage::disk('public')->delete('film/'.$film->image);   
             }
 
@@ -194,7 +196,7 @@ class FilmController extends Controller
         $film->genres()->sync($request->genres);
        
         
-        Toastr::success('Post Successfully Updated :)','Success');
+        Toastr::success('Film Successfully Updated :)','Success');
         return back();
     }
 
@@ -204,8 +206,21 @@ class FilmController extends Controller
      * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Film $film)
+    public function deleteFilm($film)
     {
-        //
+       // delete old image
+           
+        $film = Film::find($film);
+        $film->genres()->detach($film);  
+
+        if (storage::disk('public')->exists('film/'.$film->image)) 
+            {
+               Storage::disk('public')->delete('film/'.$film->image);   
+            }
+          
+        $film->delete();
+
+        Toastr::error('Post Deleted Successfully :)','Deleted');
+        return back();
     }
 }
