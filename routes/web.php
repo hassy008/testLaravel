@@ -38,3 +38,6 @@ Route::get('/delete-genre/{id}', 'GenreController@deleteGenre');
 Route::get('/add-film', 'FilmController@addFilm');
 Route::post('/save-film', 'FilmController@saveFilm');
 Route::get('/manage-film', 'FilmController@manageFilm');
+Route::get('/edit-film/{id}', 'FilmController@editFilm');
+Route::post('/update-film', 'FilmController@updateFilm');
+Route::get('/delete-film/{id}', 'FilmController@deleteFilm');

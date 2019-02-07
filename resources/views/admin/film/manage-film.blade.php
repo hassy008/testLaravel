@@ -62,12 +62,12 @@ Manage Genre
         <td class="hidden-phone">{{ $v_film->rating }}</td>
         <td>
             <img src="{{ asset('public/storage/film/'.$v_film->image) }}" alt="" style="width: 80px; height: 50px;"> 
-       {{--      <img src="{{ asset('public/genre/'.$v_film->image) }}" alt="" style="width: 80px; height: 50px;">--}}
+       {{--      <img src="{{ asset('public/film/'.$v_film->image) }}" alt="" style="width: 80px; height: 50px;">--}}
         </td>
 
         <td>
-            <a href="{{ url('/edit-genre/'.$v_film->id) }}" class="btn btn-primary"><i class="icon-pencil"></i></a> 
-            <a href="{{ url('/delete-genre/'.$v_film->id) }}" class="btn btn-danger" onclick="return checkDelete()"><i class="icon-trash "></i></a>
+            <a href="{{ url('/edit-film/'.$v_film->id) }}" class="btn btn-primary"><i class="icon-pencil"></i></a> 
+            <a href="{{ url('/delete-film/'.$v_film->id) }}" class="btn btn-danger" onclick="return checkDelete()"><i class="icon-trash "></i></a>
         </td>
     </tr>
        

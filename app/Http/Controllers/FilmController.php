@@ -129,9 +129,11 @@ class FilmController extends Controller
      * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function edit(Film $film)
+    public function editFilm( $film)
     {
-        //
+    $FilmById = Film::where('id',$film)->first();    
+       $genres = Genre::all();
+       return view('admin.film.edit-film', compact('FilmById','genres'));
     }
 
     /**
@@ -141,9 +143,59 @@ class FilmController extends Controller
      * @param  \App\Film  $film
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Film $film)
+    public function updateFilm(Request $request,film $film)
     {
-        //
+        // return $request->all();
+         $this->validate($request,[
+            'name' => 'required',
+            'description' => 'required',
+            'release_date' => 'required',
+            'ticket_price' => 'required',
+            'rating' => 'required',
+            'country' => 'required',
+           
+            
+        ]);
+        $image = $request->file('image');
+        $slug = str_slug($request->name);
+        $film = Film::find($request->id);
+        if(isset($image))
+        {
+//            make unipue name for image
+            $currentDate = Carbon::now()->toDateString();
+            $imageName  = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+            if(!Storage::disk('public')->exists('film'))
+            {
+                Storage::disk('public')->makeDirectory('film');
+            }
+// delete old image
+            if (storage::disk('public')->exists('film/'.$film->image)) {
+               Storage::disk('public')->delete('film/'.$film->image);   
+            }
+
+
+            $filmImage = Image::make($image)->resize(1600,1066)->stream();
+            Storage::disk('public')->put('film/'.$imageName,$filmImage);
+        } else {
+            $imageName = $film->image;
+        }
+       
+        $film->name = $request->name;
+        $film->slug = $slug;
+        $film->description = $request->description;
+        $film->release_date = $request->release_date;
+
+        $film->ticket_price = $request->ticket_price;
+        $film->rating = $request->rating;
+        $film->image = $imageName;
+        $film->country = $request->country;
+        
+        $film->save();
+        $film->genres()->sync($request->genres);
+       
+        
+        Toastr::success('Post Successfully Updated :)','Success');
+        return back();
     }
 
     /**
