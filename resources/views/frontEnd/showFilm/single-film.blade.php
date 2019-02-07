@@ -12,7 +12,7 @@ Movie Details
 		<!-- /w3l-medile-movies-grids -->
 			<div class="agileits-single-top">
 				<ol class="breadcrumb">
-				  <li><a href="index.html">Home</a></li>
+				  <li><a href="{{ url('/') }}">Home</a></li>
 				  <li class="active">Single</li>
 				</ol>
 			</div>
@@ -22,27 +22,35 @@ Movie Details
 				<div class="col-sm-8 single-left">
 					<div class="song">
 						<div class="song-info">
-							<h3>THE LEGEND OF TARZAN - Official Trailer 2</h3>	
+							<h3>{{ $FilmById->name }} </h3>	
 					</div>
 						<div class="video-grid-single-page-agileits">
 							<div data-video="dLmKio67pVQ" id="video"> 
-								<img src="{{ asset('public/frontEnd/') }}/images/5.jpg" alt="" class="img-responsive" /> 
+								<img src="{{ asset('public/storage/film/'.$FilmById->image) }}" alt="" class="img-responsive" /> 
 							</div>
 							<div>
 				<form>
-					<td>Name</td>:{{ $FilmById->name }} <br>
-					<td>Release Date</td> : {{ $FilmById->release_date }}<br>
-				 	<td>Rating</td>: {{ $FilmById->rating }}/5<br>
+					<td>
+						<tr>Release Date: </tr>
+						<tr>{{ $FilmById->release_date }}</tr>
+					</td> <br>
+					<td>
+						<tr>Rating: </tr>
+						<tr>{{ $FilmById->rating }}</tr>
+					</td> <br>
+				 	
 					<td>Ticket Price</td> : {{ $FilmById->ticket_price }} <br>
-					<td>Country</td>: {{ $FilmById->country }}<br>
-					<td>Description</td> : {!! $FilmById->description !!}<br>
-					
-					<td>Genre</td> :  
+					<td>Genre :  
 						@foreach($FilmById->genres as $showGenre)
 	                  		{{ $showGenre->genres_name }} |
 	               		@endforeach  
-               		<br>
-					
+               		</td> <br>
+					<td>Country</td>: {{ $FilmById->country }}<br>
+					<td>Description</td> : {!! $FilmById->description !!}<br>
+
+					<iframe width="560" height="315" src="{{ $FilmById->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 					
 				</form>
 							</div>

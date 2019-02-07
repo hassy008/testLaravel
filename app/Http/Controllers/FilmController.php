@@ -56,7 +56,6 @@ class FilmController extends Controller
             'rating' => 'required',
             'country' => 'required',
             'image' => 'required',
-            'genres' => 'required',
             
         ]);
         $image = $request->file('image');
@@ -80,7 +79,7 @@ class FilmController extends Controller
         $film->slug = $slug;
         $film->description = $request->description;
         $film->release_date = $request->release_date;
-
+        $film->video = $request->video;
         $film->ticket_price = $request->ticket_price;
         $film->rating = $request->rating;
         $film->image = $imageName;
@@ -186,7 +185,7 @@ class FilmController extends Controller
         $film->slug = $slug;
         $film->description = $request->description;
         $film->release_date = $request->release_date;
-
+        $film->video = $request->video;
         $film->ticket_price = $request->ticket_price;
         $film->rating = $request->rating;
         $film->image = $imageName;

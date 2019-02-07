@@ -114,6 +114,12 @@ Edit Film
 </span>
 @endif 	  
     </div>
+    <div class="control-group">
+        <label class="control-label">Video Link(optional) </label>
+        <div class="controls">
+          <input type="text" class="span6" name="video"> 
+        </div>
+      </div>
       
         <div class="control-group">
         <label class="control-label">Film Image</label>
