@@ -18,6 +18,19 @@ Manage Genre
     </div>
     <div class="widget-body">
     
+     @if(session('success'))
+<div class="alert alert-success text-center">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" >&times;</button>
+    <b>{{ session('success') }}</b>
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger text-center">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" >&times;</button>
+    <b>{{ session('error') }}</b>
+</div>
+@endif
     <h2 class="text-center text-success">{{Session::get('message')}}</h2>    
 
         <table class="table table-striped table-bordered table-advance table-hover">

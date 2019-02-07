@@ -167,8 +167,17 @@ class GenreController extends Controller
         $err_msg= \Lang::get($e->getMsg());
         return redirect::to('edit-genre/'.$request->genres_id)->with('error', $err_msg);
         }
-       
+
     } 
+
+    public function deleteGenre($genres_id)
+    {
+       DB::table('genres')
+        ->where('genres_id', $genres_id)
+        ->delete();
+       // return redirect::to('/manage-product');
+      return back()->with('error', 'Genre Deleted Successfully');
+    }
 
 
 

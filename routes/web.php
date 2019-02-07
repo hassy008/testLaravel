@@ -32,4 +32,7 @@ Route::get('/manage-genre', 'GenreController@manageGenre');
 Route::get('/delete-genre/{id}', 'GenreController@deleteGenre');
 Route::get('/edit-genre/{id}', 'GenreController@editGenre');
 Route::post('/update-genre', 'GenreController@updateGenre');
+Route::get('/delete-genre/{id}', 'GenreController@deleteGenre');
+
+
 

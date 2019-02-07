@@ -121,6 +121,20 @@
       @endif
    </script>
 
+    <!--for delete query begin -->
+   <script type="text/javascript">
+      function checkDelete(){
+         chk=confirm('Are You Sure To Delete??');
+         if (chk) {
+            return true;
+         } else{
+            return false;
+         }
+      }
+   </script>
+
+<!--for delete query end -->
+
 
    <!-- END JAVASCRIPTS -->   
 </body>
