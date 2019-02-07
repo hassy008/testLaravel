@@ -18,15 +18,19 @@ Add genre
 
  	 <div class="widget-body">
  <!--BEGIN FORM-->
- <h3 style="color:green" align="center">
- 	<?php
- 	  $message = Session::get('message');
- 	  if($message){
- 	  	echo '<b>'.$message.'</b>';
- 	  	Session::put('message');
- 	  }
- 	?>
- </h3>
+ @if(session('success'))
+<div class="alert alert-success text-center">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" >&times;</button>
+    <b>{{ session('success') }}</b>
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger text-center">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" >&times;</button>
+    <b>{{ session('error') }}</b>
+</div>
+@endif
  	 	{!!Form::open(['url'=>'/save-genre','method'=>'post','class'=>'form-horizontal','enctype'=>'multipart/form-data']) !!}
  	 	  
  	 	  <div class="control-group">

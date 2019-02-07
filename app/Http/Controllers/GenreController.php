@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Session;
 use App\Genre;
+use DB;
 use Illuminate\Support\Facades\Redirect; //added by hassy008
 session_start();
 
@@ -30,44 +31,145 @@ class GenreController extends Controller
    	  'genres_image' => 'required|mimes:jpg,jpeg,png,bmp'
    	]);
 
-   	$image = $request->file('genres_image');
-   	$slug  = str_slug($request->genres_name);
-   	if (isset($image)) {
-   	  //make unique name for image
-   	  $currentDate = Carbon::now()->toDateString();	
-   	   $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-//            check category dir is exists
-            if (!Storage::disk('public')->exists('genre'))
-            {
-                Storage::disk('public')->makeDirectory('genre');
-            }
-//            resize image for category and upload
-            $genre = Image::make($image)->resize(1600,479)->stream();
-            Storage::disk('public')->put('genre/'.$imagename,$genre);
-            //            check genre slider dir is exists
-            if (!Storage::disk('public')->exists('genre/slider'))
-            {
-                Storage::disk('public')->makeDirectory('genre/slider');
-            }
-            //            resize image for genre slider and upload
-            $slider = Image::make($image)->resize(500,333)->stream();
-            Storage::disk('public')->put('genre/slider/'.$imagename,$slider);
-        } else {
-            $imagename = "default.png";
-        }
+   	 try {
+        $data = array();
+        $data['genres_name']  = $request->genres_name ;
+        $slug                 = str_slug($request->genres_name);
+        $data['genres_slug']  = $slug ;
+        
 
-        //return $request;
-        $genre = new Genre();
-        $genre->genres_name = $request->genres_name;
-        $genre->genres_slug = $slug;
-        $genre->genres_image = $imagename;
-        $genre->save();
-        Toastr::success('genre Successfully Saved :)' ,'Success');
-      //  return redirect()->route('admin.genre.index');
+//----------------START IMAGE UPLOAD--------------//
+        $image=$request->file('genres_image');
+        if ($image) {
+          $file_size=$image->getClientSize();
+          $name= str_random(20);
+          $extension = $image->getClientOriginalExtension();
+          $image_name= $name.'.'.$extension;
+          $upload_path='public/genre/';
+          //------------check image format------------//
+          if ($extension == 'jpg' || $extension == 'png' ||$extension == 'jpeg' ) {
+            //-------check file size-------//
+            if ($file_size<51200000) {
+              $success = $image->move($upload_path, $image_name);
+              $data['genres_image'] = $image_name;
+              $result = DB::table('genres')
+                      ->insert($data);
+              } else{
+                  exit();
+                  return redirect::to('add-genre')->with('error', 'Max file size not more than 5MB');
+              }
+          }
+          else {
+            return redirect::to('add-genre')->with('error', 'You have to put right file type( jpg/png/jpeg ) only');
+          }
+        }
+        else{
+            $result = DB::table('genres')
+                     ->insert($data);
+        }
+        //--------End Image Upload------//
+        if ($result) {
+          return redirect::to('add-genre')->with('success', 'Upload New genre');
+        } else {
+          return redirect::to('add-genre')->with('error', 'Some Error');
+        }
+    } catch (\Exception $e) {
+         $err_msg= \Lang::get($e->getMsg());
+        return redirect::to('add-genre')->with('error', $err_msg);
+        }
+    //    Toastr::success('New Genre Successfully Saved :)' ,'Success');
+    
    		
    		return back();
 
    }
+
+   public function manageGenre()
+   {
+   	  $all_genres=DB::table('genres')
+    				->get();
+
+      $manage_genres_page=view('admin.genre.manage-genre')
+    			->with('all_genres', $all_genres);
+      return view('admin.admin_master')
+    		->with('mainContent', $manage_genres_page);
+   }
+
+   public function editGenre($id)
+   {
+      $genre_edit=DB::table('genres')
+            ->where('genres_id', $id)
+            ->first();
+
+        $edit_genres_page=view('admin.genre.edit-genre')
+            ->with('genre_edit', $genre_edit);
+        return view('admin.admin_master')
+            ->with('mainContent', $edit_genres_page);
+   }
+
+   public function updateGenre(Request $request)
+    {
+     $this->validate($request, [
+   	  'genres_name'   => 'required',
+   	//  'genres_image' => 'mimes:jpg,jpeg,png,bmp'
+   	]);
+
+      try {
+        $data = array();
+        $data['genres_name']  = $request->genres_name ;
+        $slug                 = str_slug($request->genres_name);
+        $data['genres_slug']  = $slug ;
+        
+
+//----------------START IMAGE UPLOAD--------------//
+          $image=$request->file('genres_image');
+        if ($image) {
+          $file_size=$image->getClientSize();
+          $name= str_random(20);
+          $extension = $image->getClientOriginalExtension();
+          $image_name= $name.'.'.$extension;
+          $upload_path='public/genre/';
+          //------------check image format------------//
+          if ($extension == 'jpg' || $extension == 'png' ||$extension == 'jpeg' ) {
+            //-------check file size-------//
+            if ($file_size<51200000) {
+              $success = $image->move($upload_path, $image_name);
+              if ($request->last_image_path) {
+                $old_image_path= $request->last_image_path;
+                unlink('public/genre/'.$old_image_path);
+              }
+              $data['genres_image'] = $image_name;
+              $result = DB::table('genres')
+                        ->where('genres_id', $request->genres_id)
+                        ->update($data);
+              } else{
+                  exit();
+                  return redirect::to('edit-genre')->with('error', 'Max file size not more than 5MB');
+              }
+          }
+          else {
+            return redirect::to('edit-genre')->with('error', 'You have to put right file type( jpg/png/jpeg ) only');
+          }
+        }
+        else{
+            $data['genres_image'] = $request->last_image_path;
+            $result = DB::table('genres')
+                      ->where('genres_id', $request->genres_id)
+                      ->update($data);
+        }
+        //--------End Image Upload------//
+        if ($result) {
+          return redirect::to('edit-genre/'.$request->genres_id)->with('success', 'Update genre Successfully');
+        } else {
+          return redirect::to('edit-genre/'.$request->genres_id)->with('error', 'Some Error');
+        }
+    } catch (\Exception $e) {
+        $err_msg= \Lang::get($e->getMsg());
+        return redirect::to('edit-genre/'.$request->genres_id)->with('error', $err_msg);
+        }
+       
+    } 
+
 
 
 

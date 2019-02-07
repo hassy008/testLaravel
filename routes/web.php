@@ -28,3 +28,8 @@ Route::get('/logout', 'SuperAdminController@logout');
 
 Route::get('/add-genre', 'GenreController@addGenre');
 Route::post('/save-genre', 'GenreController@saveGenre');
+Route::get('/manage-genre', 'GenreController@manageGenre');
+Route::get('/delete-genre/{id}', 'GenreController@deleteGenre');
+Route::get('/edit-genre/{id}', 'GenreController@editGenre');
+Route::post('/update-genre', 'GenreController@updateGenre');
+
