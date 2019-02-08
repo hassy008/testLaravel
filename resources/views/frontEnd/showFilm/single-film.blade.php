@@ -101,9 +101,12 @@ Movie Details
 					<div class="clearfix"> </div>
 
 					<div class="all-comments">
+					@guest	
+					<h4>You have to <a href="{{ url('/login') }}">Login</a> First Please</h4>
+					@else
+						<H3>Post Your Comments</H3>
 						<div id="disqus_thread"></div>
 <script>
-
 /**
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
@@ -121,7 +124,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
+                     @endguest       
 					</div>
 
 				</div>
