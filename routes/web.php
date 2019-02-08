@@ -15,9 +15,10 @@ Route::get('/', 'WelcomeController@index');
 Route::get('/film-details/{slug}', 'WelcomeController@filmDetails');
 Route::get('/category-blog/{id}', 'WelcomeController@categoryBlog');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 

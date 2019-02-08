@@ -50,7 +50,8 @@ Movie Details
 
 					<iframe width="560" height="315" src="{{ $FilmById->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
+					
+						
 					
 				</form>
 							</div>
